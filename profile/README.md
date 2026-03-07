@@ -1,6 +1,6 @@
 ![icub](https://github.com/icub-tech-iit/.github/blob/master/profile/assets/icub.png)
 
-# iCub Tech 🤖
+# MESH 🤖
 
 Our humanoid robot, the iCub™ (I as in “I robot”, Cub as in the man-cub from Kipling’s Jungle Book), has been specifically designed
 to support research in embodied artificial intelligence (AI). At 104 cm tall, the iCub is the size of a five-year-old child.
@@ -14,7 +14,7 @@ of the near future. We take a 360-degree approach to robotics including mechanic
 (e.g. neuromorphic), sensor development (e.g. tactile, cameras), middleware, and control and AI algorithms. Our research is carried out in
 collaboration with several research lines at IIT, international academic partners, as well as a selected number of industrial stakeholders.
 
-[**🌐 iCub Tech website**](https://www.iit.it/web/icub-tech)
+[**🌐 MESH website**](https://mesh.iit.it)
 
 ## ✏️ How to contact us
 
