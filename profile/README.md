@@ -1,4 +1,4 @@
-![icub](https://github.com/icub-tech-iit/.github/blob/master/profile/assets/icub.png)
+![icub](https://github.com/mesh-iit/.github/blob/master/profile/assets/icub.png)
 
 # MESH 🤖
 
@@ -19,7 +19,7 @@ collaboration with several research lines at IIT, international academic partner
 ## ✏️ How to contact us
 
 ### ⚙️ `HW Support`
-To get support for robot maintenance and more in general for hardware-related issues, please visit our [robot-specific tickets system](https://github.com/robotology/icub-tech-support) on GitHub.
+To get support for robot maintenance and more in general for hardware-related issues, please visit our [robot-specific tickets system](https://github.com/robotology/mesh-support) on GitHub.
 
 ### 🗣️ `Community`
 To discuss general topics and SW-specific questions, please visit our [community](https://github.com/robotology/community).
@@ -27,9 +27,9 @@ To discuss general topics and SW-specific questions, please visit our [community
 ## 🔗 Useful resources
 
 ### 📖 `Documentation`
-Check out our online [documentation](https://icub-tech-iit.github.io/documentation).
+Check out our online [documentation](https://mesh-iit.github.io/documentation).
 
 ### 💽 `HW Repositories`
-- [Mechanics](https://github.com/icub-tech-iit/cad-mechanics-public)
-- [Electronics](https://github.com/icub-tech-iit/electronics-boards-public)
-- [Wiring](https://github.com/icub-tech-iit/electronics-wiring-public)
+- [Mechanics](https://github.com/mesh-iit/cad-mechanics-public)
+- [Electronics](https://github.com/mesh-iit/electronics-boards-public)
+- [Wiring](https://github.com/mesh-iit/electronics-wiring-public)
