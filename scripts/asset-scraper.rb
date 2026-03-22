@@ -61,7 +61,11 @@ Dir.entries(input_dir).each { |f|
         # cycle over URLs
         update_file = false
         URI.extract(text).each { |uri|
-            if uri.include?("github.com/user-attachments/assets") || uri.include?(repo + "/assets") then
+            # Legacy case: handle both current repo path and old icub-tech-iit organization path
+            repo_name = repo.split('/').last
+            legacy_repo_path = "icub-tech-iit/#{repo_name}/assets"
+
+            if uri.include?("github.com/user-attachments/assets") || uri.include?(repo + "/assets") || uri.include?(legacy_repo_path) then
                 # Trimming URL:
                 # Remove any character at the end ($) that is NOT (^) alphanumeric ([a-zA-Z0-9])
                 # The '+' means "one or more", so it handles multiple trailing chars like ")."
