@@ -31,7 +31,7 @@ jobs:
 
       - name: Scrape markdown assets
         run: |
-          curl -O https://raw.githubusercontent.com/icub-tech-iit/.github/master/scripts/asset-scraper.rb
+          curl -O https://raw.githubusercontent.com/mesh-iit/.github/master/scripts/asset-scraper.rb
           chmod +x ./asset-scraper.rb
           ./asset-scraper.rb ${{ github.repository }} docs/md docs/md/assets assets
         env:
