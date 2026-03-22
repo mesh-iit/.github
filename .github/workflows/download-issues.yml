@@ -1,4 +1,4 @@
-# Drop this workflow inside your reporitoy
+# ℹ️ 👉🏻 Drop this workflow inside your reporitoy
 name: Download Issues and PRs
 
 on:
