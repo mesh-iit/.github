@@ -1,0 +1,12 @@
+# Drop this workflow inside your reporitoy
+name: Download Issues and PRs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-central-workflow:
+    # Syntax: owner/repo/path/to/file@ref
+    uses: mesh-iit/.github/.github/workflows/download-issues-reusable.yml@master
+    # 'inherit' passes the caller's secrets (like GH_ASSET_SCRAPER_PAT) to the central workflow automatically
+    secrets: inherit
