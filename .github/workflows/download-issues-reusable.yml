@@ -23,6 +23,10 @@ jobs:
     # Context note: When called, ${{ github.repository }} refers to the CALLER repo,
     # so your logic works perfectly without modification.
     steps:
+      - name: Get repo name
+        run: |
+          echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+          
       - name: Install tools
         run: |
           pip install --break-system-packages --user --upgrade setuptools
@@ -36,26 +40,8 @@ jobs:
           # In reusable workflows, GITHUB_TOKEN is the caller's token (correct context)
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Scrape markdown assets
+      - name: Filter by Date
         run: |
-          curl -O https://raw.githubusercontent.com/mesh-iit/.github/master/scripts/asset-scraper.rb
-          chmod +x ./asset-scraper.rb
-          ./asset-scraper.rb ${{ github.repository }} docs/md docs/md/assets assets
-        env:
-          # This secret must be passed from the caller
-          GH_ASSET_SCRAPER_PAT: ${{ secrets.GH_ASSET_SCRAPER_PAT }}
-
-      - name: Get repo name
-        run: |
-          echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
-
-      - name: Compress and split docs directory
-        run: |
-          if [ ! -d "docs" ]; then
-            echo "Error: docs directory not found"
-            exit 1
-          fi
-          
           START_DATE="${{ inputs.start_date }}"
           END_DATE="${{ inputs.end_date }}"
 
@@ -82,6 +68,22 @@ jobs:
             echo "Date range not specified or incomplete. No files removed."
           fi
 
+      - name: Scrape markdown assets
+        run: |
+          curl -O https://raw.githubusercontent.com/mesh-iit/.github/master/scripts/asset-scraper.rb
+          chmod +x ./asset-scraper.rb
+          ./asset-scraper.rb ${{ github.repository }} docs/md docs/md/assets assets
+        env:
+          # This secret must be passed from the caller
+          GH_ASSET_SCRAPER_PAT: ${{ secrets.GH_ASSET_SCRAPER_PAT }}
+
+      - name: Compress and split docs directory
+        run: |
+          if [ ! -d "docs" ]; then
+            echo "Error: docs directory not found"
+            exit 1
+          fi
+          
           echo "Creating the archive..."
           
           DOCS_SIZE=$(du -sb docs | awk '{print $1}')
