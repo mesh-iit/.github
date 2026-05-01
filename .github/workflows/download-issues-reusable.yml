@@ -69,5 +69,5 @@ jobs:
         with:
           name: ${{ env.REPO_NAME }}
           path: artifact-chunks
-          retention-days: 30
+          retention-days: 1
           overwrite: true
