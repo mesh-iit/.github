@@ -7,6 +7,17 @@ on:
     secrets:
       GH_ASSET_SCRAPER_PAT:
         required: true
+    inputs:
+      start_date:
+        description: 'Start date for filtering markdown files (YYYY-MM-DD format)'
+        required: false
+        type: string
+        default: ''
+      end_date:
+        description: 'End date for filtering markdown files (YYYY-MM-DD format)'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   Retrieve:
@@ -40,14 +51,42 @@ jobs:
 
       - name: Get repo name
         run: |
-          echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV    
-      
+          echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+
       - name: Compress and split docs directory
         run: |
           if [ ! -d "docs" ]; then
             echo "Error: docs directory not found"
             exit 1
           fi
+          
+          START_DATE="${{ inputs.start_date }}"
+          END_DATE="${{ inputs.end_date }}"
+
+          # Run the filter only if both dates have been provided
+          if [[ -n "$START_DATE" ]] && [[ -n "$END_DATE" ]]; then
+            echo "Filtering markdown files, keeping only those between $START_DATE and $END_DATE..."
+            
+            # shopt prevents errors if the directory is empty or contains no .md files
+            shopt -s nullglob
+            for file in docs/md/*.md; do
+              # Extract the filename ignoring the path
+              filename=$(basename "$file")
+              # Extract the first 10 characters (YYYY-MM-DD)
+              file_date="${filename:0:10}"
+              
+              # Lexicographical comparison of the dates
+              if [[ "$file_date" < "$START_DATE" ]] || [[ "$file_date" > "$END_DATE" ]]; then
+                echo "Removing $file (Date $file_date out of range)"
+                rm "$file"
+              fi
+            done
+            shopt -u nullglob
+          else
+            echo "Date range not specified or incomplete. No files removed."
+          fi
+
+          echo "Creating the archive..."
           
           DOCS_SIZE=$(du -sb docs | awk '{print $1}')
           THRESHOLD=$((2 * 1024 * 1024 * 1024))
