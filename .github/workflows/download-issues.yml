@@ -14,6 +14,11 @@ on:
         required: false
         type: string
         default: ''
+      include_all_open:
+        description: "If true, keep issues and PRs still open ignoring date filtering"
+        required: false
+        type: boolean
+        default: true  
 
 jobs:
   call-central-workflow:
