@@ -29,3 +29,4 @@ jobs:
     with:
       start_date: ${{ inputs.start_date }}
       end_date: ${{ inputs.end_date }}
+      include_all_open: ${{ inputs.include_all_open }}
