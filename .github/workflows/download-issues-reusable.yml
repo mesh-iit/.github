@@ -14,6 +14,9 @@ on:
       end_date:
         required: false
         type: string
+      include_all_open:
+        required: false
+        type: boolean
 
 jobs:
   Retrieve:
@@ -40,10 +43,11 @@ jobs:
           # In reusable workflows, GITHUB_TOKEN is the caller's token (correct context)
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Filter by Date
+      - name: Filter by date
         run: |
           START_DATE="${{ inputs.start_date }}"
           END_DATE="${{ inputs.end_date }}"
+          INCLUDE_ALL_OPEN="${{ inputs.include_all_open }}"
 
           # Run the filter only if both dates have been provided
           if [[ -n "$START_DATE" ]] && [[ -n "$END_DATE" ]]; then
@@ -56,11 +60,14 @@ jobs:
               filename=$(basename "$file")
               # Extract the first 10 characters (YYYY-MM-DD)
               file_date="${filename:0:10}"
+              file_status=$(echo "$filename" | cut -d'.' -f4)
               
               # Lexicographical comparison of the dates
               if [[ "$file_date" < "$START_DATE" ]] || [[ "$file_date" > "$END_DATE" ]]; then
-                echo "Removing $file (Date $file_date out of range)"
-                rm "$file"
+                if [[ "$INCLUDE_ALL_OPEN" == "true" && "$file_status" != "open" ]]; then
+                  echo "Removing $file (Date $file_date out of range)"
+                  rm "$file"
+                fi
               fi
             done
             shopt -u nullglob
