@@ -3,6 +3,17 @@ name: Download Issues and PRs
 
 on:
   workflow_dispatch:
+    inputs:
+      start_date:
+        description: 'Start date for filtering markdown files (YYYY-MM-DD format)'
+        required: false
+        type: string
+        default: ''
+      end_date:
+        description: 'End date for filtering markdown files (YYYY-MM-DD format)'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   call-central-workflow:
@@ -10,3 +21,6 @@ jobs:
     uses: mesh-iit/.github/.github/workflows/download-issues-reusable.yml@master
     # 'inherit' passes the caller's secrets (like GH_ASSET_SCRAPER_PAT) to the central workflow automatically
     secrets: inherit
+    with:
+      start_date: ${{ inputs.start_date }}
+      end_date: ${{ inputs.end_date }}
